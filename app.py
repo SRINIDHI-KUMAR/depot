@@ -1444,7 +1444,7 @@ def create_comparison_dashboard(data_2025, data_2026):
 
 # ============ ADD THESE NEW FUNCTIONS HERE ============
 def data_entry_form():
-    st.markdown("### 📝 Enter New Data Record")
+    st.markdown("###  Enter New Data Record")
     st.markdown("---")
     
     manager = DataManager()
@@ -1497,7 +1497,7 @@ def data_entry_form():
         
         st.info(f"**Auto-calculated RPT:** {rpt:,.2f} ₹ per 100,000")
         
-        if st.form_submit_button("📥 Insert Data", use_container_width=True):
+        if st.form_submit_button(" Insert Data", use_container_width=True):
             if not final_depot:
                 st.error("Depot name is required")
                 return
@@ -1529,7 +1529,7 @@ def data_entry_form():
                 st.error(message)
 
 def edit_data_form():
-    st.markdown("### ✏️ Edit Existing Record")
+    st.markdown("###  Edit Existing Record")
     st.markdown("---")
     
     manager = DataManager()
@@ -1594,7 +1594,7 @@ def edit_data_form():
             new_rpt = (new_total_freight / new_volume) * 100000 if new_volume > 0 else 0
             st.info(f"**Updated RPT:** {new_rpt:,.2f} ₹ per 100,000")
             
-            if st.form_submit_button("💾 Update Record", use_container_width=True):
+            if st.form_submit_button(" Update Record", use_container_width=True):
                 updated_data = {
                     'Depot': normalize_depot(new_depot),
                     'Vol': new_volume,
@@ -1770,9 +1770,9 @@ def main():
         st.markdown("""
         <div style="text-align: center; padding: 0.5rem 0;">
             <h1 style="color: #FFFFFF; font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); margin: 0;">
-                🏭 Depot Wise Freight Cost Dashboard
+                 Depot Wise Freight Cost Dashboard
             </h1>
-            <p style="color: #E8D5B7; font-size: 0.85rem; margin-top: -0.2rem;">Mondelez International</p>
+
         </div>
         """, unsafe_allow_html=True)
         
@@ -1831,10 +1831,10 @@ def main():
         st.divider()
         
         # ============ ADD THIS NEW SECTION IN SIDEBAR ============
-        st.markdown("### 📊 Data Management")
+        st.markdown("###  Data Management")
 
         # Use radio with index -1 for "None selected" option
-        data_action_options = ["📊 View Dashboard", "📝 Insert Data", "✏️ Edit Data", "🗑️ Delete Month"]
+        data_action_options = [" View Dashboard", " Insert Data", " Edit Data", " Delete Month"]
         data_action_index = 0  # Default to Dashboard view
 
         # Get current selection from session state
@@ -1882,11 +1882,11 @@ def main():
     data_action = st.session_state.get("data_action", "")
 
     # Only show data management forms when a specific action is selected
-    if data_action == "📝 Insert Data":
+    if data_action == " Insert Data":
         data_entry_form()
-    elif data_action == "✏️ Edit Data":
+    elif data_action == " Edit Data":
         edit_data_form()
-    elif data_action == "🗑️ Delete Month":
+    elif data_action == " Delete Month":
         delete_month_form()
     else:
         # Display dashboard (default view)
