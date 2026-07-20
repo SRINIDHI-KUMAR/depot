@@ -2,4 +2,4 @@ streamlit
 pandas
 numpy
 plotly
-openpyxlgit
+openpyxl
