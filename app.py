@@ -783,25 +783,15 @@ def create_year_dashboard(data, selected_year, selected_month):
     with st.container():
         col1, col2, col3, col4, col5 = st.columns(5)
         with col1:
-            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
             st.metric("💰 Total Freight", f"₹{total_frt:,.0f}" if not pd.isna(total_frt) else "₹0")
-            st.markdown('</div>', unsafe_allow_html=True)
         with col2:
-            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
             st.metric("📊 Avg RPT", f"{avg_rpt:,.1f}" if not pd.isna(avg_rpt) else "0")
-            st.markdown('</div>', unsafe_allow_html=True)
         with col3:
-            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
             st.metric("📦 Total Volume", f"{total_vol:,.0f}" if not pd.isna(total_vol) else "0")
-            st.markdown('</div>', unsafe_allow_html=True)
         with col4:
-            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
             st.metric("🏆 Highest RPT", highest)
-            st.markdown('</div>', unsafe_allow_html=True)
         with col5:
-            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
             st.metric("📉 Lowest RPT", lowest)
-            st.markdown('</div>', unsafe_allow_html=True)
     
     st.divider()
     
@@ -1822,7 +1812,7 @@ def apply_custom_css():
         .stMetric .st-emotion-cache-10trblm { font-size: 1.2rem !important; font-weight: 700 !important; color: #FFFFFF !important; }
         
         .block-container { 
-            padding-top: 4rem !important; 
+            padding-top: 2rem !important; 
             padding-bottom: 0.1rem !important; 
             padding-left: 1rem !important; 
             padding-right: 1rem !important; 
@@ -1834,6 +1824,28 @@ def apply_custom_css():
 
 def main():
     st.set_page_config(page_title="Depot Wise Freight Cost Dashboard", layout="wide")
+
+    st.markdown("""
+<style>
+
+/* KPI value */
+div[data-testid="stMetricValue"] {
+    font-size: 1rem !important;   /* change this */
+    font-weight: 600 !important;
+}
+
+/* KPI label */
+div[data-testid="stMetricLabel"] {
+    font-size: 0.8rem !important;
+}
+
+/* KPI delta */
+div[data-testid="stMetricDelta"] {
+    font-size: 0.75rem !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
     apply_custom_css()
     
     # --- Sidebar ---
@@ -1865,7 +1877,7 @@ def main():
         
         # Dashboard Type Selection
         st.markdown('<p style="color:#E8D5B7;font-size:0.75rem;font-weight:600;margin-bottom:0.3rem;">📊 Dashboard Type</p>', unsafe_allow_html=True)
-        dash_type = st.radio("", ["Yearly", "Comparison"], horizontal=True, key="dash_type", label_visibility="collapsed")
+        dash_type = st.radio("Dashboard Type", ["Yearly", "Comparison"], horizontal=True, key="dash_type", label_visibility="collapsed")
         
         st.divider()
         
@@ -1873,7 +1885,7 @@ def main():
         if dash_type == "Yearly":
             st.markdown('<p style="color:#E8D5B7;font-size:0.75rem;font-weight:600;margin-bottom:0.3rem;">📅 Select Year</p>', unsafe_allow_html=True)
             year_options = [str(y) for y in avail_years]
-            selected_year_str = st.selectbox("", year_options, key="year_selector", label_visibility="collapsed")
+            selected_year_str = st.selectbox("Select Year", year_options, key="year_selector", label_visibility="collapsed")
             selected_year = int(selected_year_str)
             
             if selected_year in data_cache:
@@ -1884,7 +1896,7 @@ def main():
                     st.session_state[f"month_{selected_year}"] = "All"
                 
                 st.markdown('<p style="color:#E8D5B7;font-size:0.75rem;font-weight:600;margin-bottom:0.3rem;margin-top:0.8rem;">📆 Select Month</p>', unsafe_allow_html=True)
-                selected_month = st.selectbox("", month_options, key=f"month_{selected_year}", label_visibility="collapsed")
+                selected_month = st.selectbox("Select Month", month_options, key=f"month_{selected_year}", label_visibility="collapsed")
             else:
                 selected_month = "All"
         else:
