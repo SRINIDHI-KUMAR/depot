@@ -753,7 +753,7 @@ def create_year_dashboard(data, selected_year, selected_month):
         filtered = filter_data_by_month(data, selected_month)
         is_month_view = True
     
-    # KPI Cards
+    # KPI Cards - SLIGHTLY SMALLER VERSION
     c1, c2, c3, c4, c5 = st.columns(5)
     total_frt = pd.to_numeric(filtered['Total_FRT'], errors='coerce').sum()
     avg_rpt = pd.to_numeric(filtered['RPT'], errors='coerce').mean()
@@ -762,11 +762,47 @@ def create_year_dashboard(data, selected_year, selected_month):
     highest = rpt_series.index[0] if not rpt_series.empty else "N/A"
     lowest = rpt_series.index[-1] if not rpt_series.empty else "N/A"
     
-    c1.metric("💰 Total Freight", f"₹{total_frt:,.0f}" if not pd.isna(total_frt) else "₹0")
-    c2.metric("📊 Avg RPT", f"{avg_rpt:,.1f}" if not pd.isna(avg_rpt) else "0")
-    c3.metric("📦 Total Volume", f"{total_vol:,.0f}" if not pd.isna(total_vol) else "0")
-    c4.metric("🏆 Highest RPT", highest)
-    c5.metric("📉 Lowest RPT", lowest)
+    # Use custom CSS to make metrics slightly smaller
+    st.markdown("""
+    <style>
+        .slightly-smaller-metric {
+            padding: 0.3rem !important;
+        }
+        .slightly-smaller-metric > div {
+            font-size: 0.7rem !important;
+        }
+        .slightly-smaller-metric label {
+            font-size: 0.55rem !important;
+        }
+        .slightly-smaller-metric .st-emotion-cache-10trblm {
+            font-size: 1.0rem !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    with st.container():
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
+            st.metric("💰 Total Freight", f"₹{total_frt:,.0f}" if not pd.isna(total_frt) else "₹0")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col2:
+            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
+            st.metric("📊 Avg RPT", f"{avg_rpt:,.1f}" if not pd.isna(avg_rpt) else "0")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col3:
+            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
+            st.metric("📦 Total Volume", f"{total_vol:,.0f}" if not pd.isna(total_vol) else "0")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col4:
+            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
+            st.metric("🏆 Highest RPT", highest)
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col5:
+            st.markdown('<div class="slightly-smaller-metric">', unsafe_allow_html=True)
+            st.metric("📉 Lowest RPT", lowest)
+            st.markdown('</div>', unsafe_allow_html=True)
+    
     st.divider()
     
     if is_month_view:
@@ -982,7 +1018,7 @@ def create_comparison_dashboard(data_2025, data_2026):
     data_2025_filtered = filter_data_by_month(data_2025, current_month)
     data_2026_filtered = filter_data_by_month(data_2026, current_month)
     
-    # --- KPI Cards ---
+    # --- KPI Cards - SLIGHTLY SMALLER VERSION ---
     c1, c2, c3, c4, c5 = st.columns(5)
     
     frt25 = pd.to_numeric(data_2025_filtered['Total_FRT'], errors='coerce').sum()
@@ -996,11 +1032,46 @@ def create_comparison_dashboard(data_2025, data_2026):
     chg_rpt = ((rpt26 - rpt25) / rpt25 * 100) if rpt25 > 0 else 0
     chg_vol = ((vol26 - vol25) / vol25 * 100) if vol25 > 0 else 0
     
-    c1.metric("📊 RPT 2025", f"₹{rpt25:,.1f}")
-    c2.metric("📊 RPT 2026", f"₹{rpt26:,.1f}", delta=f"{chg_rpt:+.1f}%" if chg_rpt != 0 else "0%")
-    c3.metric("💰 Freight Change", f"₹{frt26 - frt25:+,.0f}", delta=f"{chg_frt:+.1f}%" if chg_frt != 0 else "0%")
-    c4.metric("📦 Volume Change", f"{vol26 - vol25:+,.0f} MT", delta=f"{chg_vol:+.1f}%" if chg_vol != 0 else "0%")
-    c5.metric("💰 Total Freight 2025", f"₹{frt25:,.0f}")
+    # Use custom CSS to make metrics slightly smaller
+    st.markdown("""
+    <style>
+        .slightly-smaller-metric-comp {
+            padding: 0.3rem !important;
+        }
+        .slightly-smaller-metric-comp > div {
+            font-size: 0.7rem !important;
+        }
+        .slightly-smaller-metric-comp label {
+            font-size: 0.55rem !important;
+        }
+        .slightly-smaller-metric-comp .st-emotion-cache-10trblm {
+            font-size: 1.0rem !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    with st.container():
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            st.markdown('<div class="slightly-smaller-metric-comp">', unsafe_allow_html=True)
+            st.metric("📊 RPT 2025", f"₹{rpt25:,.1f}")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col2:
+            st.markdown('<div class="slightly-smaller-metric-comp">', unsafe_allow_html=True)
+            st.metric("📊 RPT 2026", f"₹{rpt26:,.1f}", delta=f"{chg_rpt:+.1f}%" if chg_rpt != 0 else "0%")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col3:
+            st.markdown('<div class="slightly-smaller-metric-comp">', unsafe_allow_html=True)
+            st.metric("💰 Freight Change", f"₹{frt26 - frt25:+,.0f}", delta=f"{chg_frt:+.1f}%" if chg_frt != 0 else "0%")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col4:
+            st.markdown('<div class="slightly-smaller-metric-comp">', unsafe_allow_html=True)
+            st.metric("📦 Volume Change", f"{vol26 - vol25:+,.0f} MT", delta=f"{chg_vol:+.1f}%" if chg_vol != 0 else "0%")
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col5:
+            st.markdown('<div class="slightly-smaller-metric-comp">', unsafe_allow_html=True)
+            st.metric("💰 Total Freight 2025", f"₹{frt25:,.0f}")
+            st.markdown('</div>', unsafe_allow_html=True)
     
     st.divider()
     
